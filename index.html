@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Crooked Mouth Brewing — craft beer, local flavor, and community-driven releases." />
+  <title>Crooked Mouth Brewing</title>
+  <style>
+    :root {
+      --bg: #0f0b08;
+      --bg-soft: #1a120d;
+      --card: #24170f;
+      --amber: #f0a23a;
+      --amber-dark: #c77818;
+      --cream: #fff3dc;
+      --muted: #cbb89b;
+      --green: #627a4b;
+      --border: rgba(255, 243, 220, 0.14);
+      --shadow: 0 24px 80px rgba(0, 0, 0, 0.35);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--cream);
+      background:
+        radial-gradient(circle at top left, rgba(240, 162, 58, 0.18), transparent 34rem),
+        radial-gradient(circle at bottom right, rgba(98, 122, 75, 0.22), transparent 30rem),
+        var(--bg);
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .container {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(16px);
+      background: rgba(15, 11, 8, 0.78);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 18px 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, var(--amber), var(--amber-dark));
+      color: #1b1009;
+      font-weight: 900;
+      box-shadow: 0 10px 30px rgba(240, 162, 58, 0.25);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .nav-links a:hover {
+      color: var(--cream);
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      padding: 0 20px;
+      border-radius: 999px;
+      font-weight: 800;
+      letter-spacing: 0.01em;
+      border: 1px solid transparent;
+      transition: transform 160ms ease, background 160ms ease, border-color 160ms ease;
+      cursor: pointer;
+    }
+
+    .button:hover {
+      transform: translateY(-1px);
+    }
+
+    .button-primary {
+      background: var(--amber);
+      color: #1a100a;
+      box-shadow: 0 14px 38px rgba(240, 162, 58, 0.26);
+    }
+
+    .button-primary:hover {
+      background: #ffc061;
+    }
+
+    .button-secondary {
+      border-color: var(--border);
+      color: var(--cream);
+      background: rgba(255, 243, 220, 0.05);
+    }
+
+    .button-secondary:hover {
+      border-color: rgba(255, 243, 220, 0.32);
+      background: rgba(255, 243, 220, 0.09);
+    }
+
+    .hero {
+      padding: 94px 0 72px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--amber);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.13em;
+      font-size: 0.78rem;
+      margin-bottom: 18px;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 38px;
+      height: 2px;
+      background: var(--amber);
+      border-radius: 999px;
+    }
+
+    h1, h2, h3 {
+      line-height: 1.05;
+      margin: 0;
+    }
+
+    h1 {
+      font-size: clamp(3rem, 8vw, 6.75rem);
+      letter-spacing: -0.07em;
+      max-width: 800px;
+    }
+
+    .hero p {
+      max-width: 660px;
+      color: var(--muted);
+      font-size: clamp(1.05rem, 2vw, 1.25rem);
+      margin: 26px 0 34px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .hero-card {
+      position: relative;
+      min-height: 520px;
+      border-radius: 32px;
+      background:
+        linear-gradient(180deg, rgba(255, 243, 220, 0.08), rgba(255, 243, 220, 0.02)),
+        radial-gradient(circle at 50% 18%, rgba(240, 162, 58, 0.32), transparent 15rem),
+        var(--card);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      padding: 28px;
+    }
+
+    .pint {
+      position: absolute;
+      left: 50%;
+      top: 52%;
+      width: 180px;
+      height: 330px;
+      transform: translate(-50%, -50%) rotate(-3deg);
+      border: 8px solid rgba(255, 243, 220, 0.82);
+      border-top-width: 14px;
+      border-radius: 18px 18px 36px 36px;
+      background: linear-gradient(180deg, #f8d487 0 18%, #e59a31 18% 82%, #7b3f16 82% 100%);
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.34);
+    }
+
+    .pint::before {
+      content: "";
+      position: absolute;
+      inset: 28px 22px auto auto;
+      width: 42px;
+      height: 180px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.18);
+      filter: blur(0.5px);
+    }
+
+    .label {
+      position: absolute;
+      left: 50%;
+      top: 54%;
+      transform: translate(-50%, -50%);
+      width: 128px;
+      height: 128px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      color: #1b1009;
+      background: var(--cream);
+      border: 5px solid #1b1009;
+      font-weight: 950;
+      line-height: 0.95;
+      letter-spacing: -0.04em;
+      text-transform: uppercase;
+    }
+
+    .floating-note {
+      position: absolute;
+      border: 1px solid var(--border);
+      background: rgba(15, 11, 8, 0.68);
+      backdrop-filter: blur(18px);
+      border-radius: 20px;
+      padding: 16px;
+      color: var(--muted);
+      max-width: 190px;
+      box-shadow: 0 18px 50px rgba(0,0,0,.22);
+    }
+
+    .floating-note strong {
+      display: block;
+      color: var(--cream);
+      margin-bottom: 3px;
+    }
+
+    .note-one {
+      top: 28px;
+      right: 24px;
+    }
+
+    .note-two {
+      left: 24px;
+      bottom: 24px;
+    }
+
+    section {
+      padding: 76px 0;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 24px;
+      margin-bottom: 30px;
+    }
+
+    .section-header h2 {
+      font-size: clamp(2.2rem, 5vw, 4rem);
+      letter-spacing: -0.055em;
+    }
+
+    .section-header p {
+      max-width: 480px;
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .card {
+      padding: 26px;
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      background: rgba(36, 23, 15, 0.78);
+      box-shadow: 0 16px 50px rgba(0, 0, 0, 0.16);
+    }
+
+    .beer-style {
+      display: inline-flex;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: rgba(240, 162, 58, 0.13);
+      color: var(--amber);
+      font-weight: 800;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 20px;
+    }
+
+    .card h3 {
+      font-size: 1.65rem;
+      letter-spacing: -0.035em;
+      margin-bottom: 12px;
+    }
+
+    .card p {
+      color: var(--muted);
+      margin: 0 0 20px;
+    }
+
+    .stats {
+      display: flex;
+      gap: 18px;
+      color: var(--cream);
+      font-weight: 800;
+      font-size: 0.95rem;
+    }
+
+    .stats span {
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 22px;
+      align-items: stretch;
+    }
+
+    .feature-box {
+      border-radius: 32px;
+      border: 1px solid var(--border);
+      background:
+        linear-gradient(145deg, rgba(98, 122, 75, 0.24), rgba(36, 23, 15, 0.92)),
+        var(--card);
+      padding: 34px;
+      min-height: 360px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .feature-box h2 {
+      font-size: clamp(2.1rem, 5vw, 4.5rem);
+      letter-spacing: -0.06em;
+      max-width: 560px;
+    }
+
+    .feature-box p {
+      color: var(--muted);
+      max-width: 560px;
+      font-size: 1.08rem;
+    }
+
+    .event-list {
+      display: grid;
+      gap: 14px;
+    }
+
+    .event {
+      display: grid;
+      grid-template-columns: 92px 1fr;
+      gap: 18px;
+      padding: 18px;
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      background: rgba(255, 243, 220, 0.045);
+    }
+
+    .date {
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      background: var(--amber);
+      color: #1b1009;
+      font-weight: 950;
+      line-height: 1;
+      min-height: 76px;
+    }
+
+    .date span {
+      display: block;
+      font-size: 1.7rem;
+      letter-spacing: -0.04em;
+    }
+
+    .event h3 {
+      font-size: 1.2rem;
+      margin-bottom: 4px;
+    }
+
+    .event p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .cta {
+      text-align: center;
+      padding: 80px 28px;
+      border-radius: 36px;
+      background:
+        radial-gradient(circle at top, rgba(240, 162, 58, 0.28), transparent 24rem),
+        rgba(36, 23, 15, 0.9);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+    }
+
+    .cta h2 {
+      font-size: clamp(2.4rem, 6vw, 5.25rem);
+      letter-spacing: -0.065em;
+      margin-bottom: 18px;
+    }
+
+    .cta p {
+      max-width: 660px;
+      color: var(--muted);
+      margin: 0 auto 30px;
+      font-size: 1.1rem;
+    }
+
+    .signup {
+      display: flex;
+      gap: 10px;
+      width: min(560px, 100%);
+      margin: 0 auto;
+      padding: 6px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(15, 11, 8, 0.58);
+    }
+
+    .signup input {
+      flex: 1;
+      min-width: 0;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      color: var(--cream);
+      padding: 0 18px;
+      font-size: 1rem;
+    }
+
+    .signup input::placeholder {
+      color: rgba(203, 184, 155, 0.76);
+    }
+
+    footer {
+      padding: 38px 0 54px;
+      color: var(--muted);
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      border-top: 1px solid var(--border);
+      padding-top: 26px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a:hover {
+      color: var(--cream);
+    }
+
+    @media (max-width: 880px) {
+      .nav-links {
+        display: none;
+      }
+
+      .hero {
+        padding-top: 64px;
+      }
+
+      .hero-grid,
+      .split {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-card {
+        min-height: 440px;
+      }
+
+      .cards {
+        grid-template-columns: 1fr;
+      }
+
+      .section-header {
+        display: block;
+      }
+
+      .section-header p {
+        margin-top: 14px;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .hero-actions,
+      .signup {
+        flex-direction: column;
+        align-items: stretch;
+        border-radius: 24px;
+      }
+
+      .signup input {
+        min-height: 48px;
+      }
+
+      .event {
+        grid-template-columns: 1fr;
+      }
+
+      .date {
+        width: 92px;
+      }
+
+      .floating-note {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav" aria-label="Main navigation">
+    <div class="container nav-inner">
+      <a class="brand" href="#top" aria-label="Crooked Mouth Brewing home">
+        <span class="brand-mark">CMB</span>
+        <span>Crooked Mouth Brewing</span>
+      </a>
+      <div class="nav-links">
+        <a href="#beers">Beer</a>
+        <a href="#taproom">Taproom</a>
+      </div>
+    </div>
+  </nav>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="eyebrow">Small-batch beer. Local character.</div>
+          <h1>Beer with a little bend in it</h1>
+          <p>
+            Crooked Mouth Brewing makes expressive, small-batch beer for people who like their pours flavorful, their taproom relaxed, and their local brewery a little off-center.
+          </p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#beers">See What’s Pouring</a>
+            <a class="button button-secondary" href="#taproom">Visit the Taproom</a>
+          </div>
+        </div>
+
+
+        </div>
+      </div>
+    </section>
+
+    <section id="beers">
+      <div class="container split">
+
+          <article class="card">
+            <div class="beer-style">Hazy IPA</div>
+            <h3>Bent Signal</h3>
+            <p>Soft, citrus-heavy, and bright with notes of orange peel, mango, and a clean hop finish.</p>
+            <div class="stats">
+              <div>6.8% <span>ABV</span></div>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="beer-style">Pilsner</div>
+            <h3>Clean Break</h3>
+            <p>Crisp, floral, and balanced. Built for repeat pours without losing its edge.</p>
+            <div class="stats">
+              <div>5.1% <span>ABV</span></div>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="beer-style">Stout</div>
+            <h3>Night Shift</h3>
+            <p>Roasty, smooth, and layered with cocoa, coffee, toasted grain, and a round finish.</p>
+            <div class="stats">
+              <div>7.4% <span>ABV</span></div>
+            </div>
+          </article>
+		  
+		  <article class="card">
+            <div class="beer-style">Stout</div>
+            <h3>Night Shift</h3>
+            <p>Roasty, smooth, and layered with cocoa, coffee, toasted grain, and a round finish.</p>
+            <div class="stats">
+              <div>7.4% <span>ABV</span></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="taproom">
+      <div class="container split">
+        <div class="feature-box">
+          <div>
+            <div class="eyebrow">Taproom</div>
+            <h2>Pull up a stool. Stay crooked.</h2>
+          </div>
+          <p>
+            Add your taproom hours, address, food details, mug club information, or online ordering link here. This section is built to work even before you have photography ready.
+          </p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="https://maps.google.com" target="_blank" rel="noopener">Get Directions</a>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="beer-style">Hours</div>
+          <h3>Taproom Hours</h3>
+          <p>Closed Sundays and Mondays.</p>
+          <p>
+            <strong>Tuesday:</strong> 4 PM – 9 PM<br />
+            <strong>Wednesday:</strong> 4 PM – 9 PM<br />
+            <strong>Thursday:</strong> 4 PM – 9 PM<br />
+            <strong>Friday:</strong> 4 PM – 10 PM<br />
+			<strong>Saturday:</strong> 4 PM – 10 PM
+          </p>
+          <p>
+            <strong>Address:</strong><br />
+            231 Vestal Ave.<br />
+            Endicott, NY 13760
+          </p>
+        </div>
+      </div>
+    </section>
+<!--
+    <section id="events">
+      <div class="container">
+        <div class="section-header">
+          <h2>Coming up</h2>
+        </div>
+
+        <div class="event-list">
+          <article class="event">
+            <div class="date">JAN <span>18</span></div>
+            <div>
+              <h3>Winter Release Night</h3>
+              <p>New seasonal beer, fresh pours, and limited cans while they last.</p>
+            </div>
+          </article>
+
+          <article class="event">
+            <div class="date">FEB <span>07</span></div>
+            <div>
+              <h3>Trivia & Taps</h3>
+              <p>Bring a team, grab a pint, and compete for brewery prizes.</p>
+            </div>
+          </article>
+
+          <article class="event">
+            <div class="date">MAR <span>14</span></div>
+            <div>
+              <h3>Collaboration Pour</h3>
+              <p>A special release brewed with local partners and community in mind.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+-->
+
+  <footer>
+    <div class="container footer-inner">
+      <div>
+        © <span id="year"></span> Crooked Mouth Brewing. All rights reserved.
+      </div>
+      <div class="footer-links">
+        <a href="mailto:crookedmouthbrewing@gmail.com">Email</a>
+        <a href="https://instagram.com/crookedmouthbrewing" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://facebook.com/crookedmouthbrewing" target="_blank" rel="noopener">Facebook</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
